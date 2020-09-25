@@ -28,7 +28,9 @@ export default class Dicebox extends React.Component{
                     locked: false,
                 },
             ],
-            totalValue: 0
+            totalValue: 0,
+            pair: false,
+            tripleton: false,
         }
     };
 
@@ -56,6 +58,9 @@ export default class Dicebox extends React.Component{
             //update the total value 
             totalValue: total,
         });
+
+        //when roll dice, check if the values are the same or even how many of them are the same
+        this.isSame();
     }
 
     //lock or unlock the dice with specific index
@@ -67,11 +72,43 @@ export default class Dicebox extends React.Component{
         });
     }
 
+    //check if dice value are the same and how many of them are the same
+    isSame(){
+        let tempPair = false;
+        let tempTripleton = false;
+
+        //add one more layer of for loop in order to run all the dice value from 1 to 6
+        for(let i =1; i<=6; i++){
+            let counter = 0;
+
+            this.state.die.forEach((dice) =>{
+                if(dice.value === i){
+                    counter++;
+                }
+            });
+
+            if(counter === 2){
+                tempPair = true;
+            }else if(counter === 3){
+                tempTripleton = true;
+            }
+            this.setState({
+                pair: tempPair,
+                tripleton: tempTripleton,
+            });
+            
+        } 
+        
+        
+    }
+
     render(){
         return(
             <div>
                 <h1>Dicebox</h1>
-                <p>totalValue: {this.state.totalValue}</p>
+                <p>Total Value: {this.state.totalValue}</p>
+                <p>Pair: {this.state.pair ? "Yes": "No"}</p>
+                <p>Tripleton: {this.state.tripleton ? "Yes": "No"}</p>
                 <section className="dicebox">
                     {this.state.die.map((dice, index)=>(
                         <Dice
