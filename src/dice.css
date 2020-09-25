@@ -6,3 +6,10 @@
     padding: 4px;
     margin: 0.5em;
 }
+
+
+/* add locked background color */
+.locked{
+    background-color: blueviolet;
+    color: white;
+}
