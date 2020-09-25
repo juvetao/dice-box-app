@@ -31,6 +31,11 @@ export default class Dicebox extends React.Component{
         }
     };
 
+    //To continue the previous state of dice before update
+    componentDidMount(){
+        this.roll();
+    }
+
     //roll in order to get random value between 1 and 6 (supposed the dice is not locked)
     roll(){
         let tempDie = this.state.die;
