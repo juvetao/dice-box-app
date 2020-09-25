@@ -44,6 +44,15 @@ export default class Dicebox extends React.Component{
         });
     }
 
+    //lock or unlock the dice with specific index
+    lock(index){
+        let tempDie = this.state.die;
+        tempDie[index].locked = !tempDie[index].locked;
+        this.setState({
+            die: tempDie
+        });
+    }
+
     render(){
         return(
             <div>
@@ -53,6 +62,8 @@ export default class Dicebox extends React.Component{
                         <Dice
                             key={index}
                             dice={dice}
+                            //click the cell to lock or unlock the dice
+                            click={()=>this.lock(index)}
                         />
                     ))}
                 </section>
