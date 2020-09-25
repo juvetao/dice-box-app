@@ -27,7 +27,8 @@ export default class Dicebox extends React.Component{
                     value: null,
                     locked: false,
                 },
-            ]
+            ],
+            totalValue: 0
         }
     };
 
@@ -39,13 +40,21 @@ export default class Dicebox extends React.Component{
     //roll in order to get random value between 1 and 6 (supposed the dice is not locked)
     roll(){
         let tempDie = this.state.die;
+
+        //add a temp total to calcluate the total value of dice
+        let total = 0;
+
         tempDie.forEach((dice)=>{
             if(!dice.locked){
                 dice.value = Math.ceil(Math.random()*6);
             }
+            //put the accumulate in this for-loop
+            total += dice.value;
         });
         this.setState({
-            die: tempDie
+            die: tempDie,
+            //update the total value 
+            totalValue: total,
         });
     }
 
@@ -62,6 +71,7 @@ export default class Dicebox extends React.Component{
         return(
             <div>
                 <h1>Dicebox</h1>
+                <p>totalValue: {this.state.totalValue}</p>
                 <section className="dicebox">
                     {this.state.die.map((dice, index)=>(
                         <Dice
